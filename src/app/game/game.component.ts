@@ -6,12 +6,12 @@ import { Game } from 'src/models/game';
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit{
+export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: string = '';
   game: Game;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.newGame();
@@ -23,8 +23,14 @@ export class GameComponent implements OnInit{
   }
 
   pickCard() {
-    this.currentCard = this.game.stack.pop();
-    this.pickCardAnimation = true;
+    if (!this.pickCardAnimation) { //wird nur durchgeführt, wenn animation false ist
+      this.currentCard = this.game.stack.pop();
+      console.log(this.currentCard);
+      this.pickCardAnimation = true;
+      setTimeout(() => { //setzt nach timeout die Animation-Variable auf false
+        this.pickCardAnimation = false;
+      }, 1500)
+    }
   }
 
 }
