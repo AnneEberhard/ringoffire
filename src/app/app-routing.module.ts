@@ -5,7 +5,7 @@ import { StartScreenComponent } from './start-screen/start-screen.component';
 
 const routes: Routes = [
   { path: 'imprint', component: ImprintComponent },
-  { path: 'start-screen', component: StartScreenComponent }
+  { path: '', component: StartScreenComponent }
 ];
 
 @NgModule({
