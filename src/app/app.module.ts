@@ -4,11 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ImprintComponent } from './imprint/imprint.component';
+import { StartScreenComponent } from './start-screen/start-screen.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ImprintComponent
+    ImprintComponent,
+    StartScreenComponent
   ],
   imports: [
     BrowserModule,
