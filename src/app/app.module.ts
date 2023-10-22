@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ImprintComponent } from './imprint/imprint.component';
 import { StartScreenComponent } from './start-screen/start-screen.component';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ImprintComponent,
-    StartScreenComponent
+    StartScreenComponent,
+    GameComponent
   ],
   imports: [
     BrowserModule,
