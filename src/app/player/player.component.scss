@@ -6,8 +6,8 @@
     border-radius: 50px 0 0 50px;
 
     img {
-        width: 100px;
-        height:100px;
+        width: 70px;
+        height:70px;
         object-fit: cover;
         border-radius: 100%;
     }
@@ -18,3 +18,11 @@
         color: rgb(92,0,0);
     }
 }
+
+.playerActive {
+    background-color: white !important;
+    span {
+        font-size: 32px !important;
+    }
+    }
+    
