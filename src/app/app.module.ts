@@ -15,6 +15,8 @@ import { DialogueAddPlayerComponent } from './dialogue-add-player/dialogue-add-p
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import { GameInfoComponent } from './game-info/game-info.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import {MatInputModule} from '@angular/material/input';
     StartScreenComponent,
     GameComponent,
     PlayerComponent,
-    DialogueAddPlayerComponent
+    DialogueAddPlayerComponent,
+    GameInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import {MatInputModule} from '@angular/material/input';
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
+    MatCardModule,
     BrowserAnimationsModule
   ],
   providers: [],
