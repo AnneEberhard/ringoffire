@@ -1,7 +1,7 @@
 .player {
     display: flex;
     align-items: center;
-    background-color: burlywood;
+    background-color: rgb(230, 213, 200);
     width: 300px;
     border-radius: 50px 0 0 50px;
 
@@ -15,5 +15,6 @@
     span {
         font-size: 24px;
         margin-left: 16px;
+        color: rgb(92,0,0);
     }
 }

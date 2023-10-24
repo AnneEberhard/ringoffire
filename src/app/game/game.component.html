@@ -2,6 +2,7 @@
   *ngFor="let player of game.players; let i = index"
   [ngStyle]="{ 'top.px': 40 + i * 120 }"
   [name]= "player"
+  [index]= "i"
   class="playerPosition"
 ></app-player>
 
