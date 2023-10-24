@@ -19,17 +19,16 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    console.log(this.game);
   }
 
   pickCard() {
     if (!this.pickCardAnimation) { //wird nur durchgeführt, wenn animation false ist
       this.currentCard = this.game.stack.pop();
-      console.log(this.currentCard);
       this.pickCardAnimation = true;
       setTimeout(() => { //setzt nach timeout die Animation-Variable auf false
+        this.game.playedCard.push(this.currentCard); //pusht nach Animation neue Karte in den playedCard stack zum Anzeigen
         this.pickCardAnimation = false;
-      }, 1500)
+      }, 1000)
     }
   }
 
