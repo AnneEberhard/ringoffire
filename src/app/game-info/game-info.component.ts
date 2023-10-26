@@ -21,8 +21,8 @@ export class GameInfoComponent implements OnInit, OnChanges {
     { title: 'Never have i ever...', description: 'Say something you nnever did. Everyone who did it has to drink.' },
     { title: 'Rule', description: 'Make a rule. Everyone needs to drink when he breaks the rule.' },
   ];
-title:string = 'Rule';
-description: string = 'What to do';
+title:string = '';
+description: string = '';
 @Input() card: string;
 
   constructor() {}

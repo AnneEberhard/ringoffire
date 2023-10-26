@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { Component, Inject } from '@angular/core';
+import {  MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialogue-add-player',
@@ -8,7 +8,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 })
 export class DialogueAddPlayerComponent {
   name:string ='';
-  onNoClick(): void {
+
+  constructor(public dialogRef: MatDialogRef<DialogueAddPlayerComponent>) {}
   
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
