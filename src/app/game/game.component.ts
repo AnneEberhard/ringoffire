@@ -17,7 +17,7 @@ export class GameComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.newGame();
+    this.newGame();  
   }
 
   newGame() {
