@@ -28,6 +28,10 @@ export class GameComponent implements OnInit {
     if (!this.pickCardAnimation) { //wird nur durchgeführt, wenn animation false ist
       this.currentCard = this.game.stack.pop();
       this.pickCardAnimation = true;
+
+      this.game.currentPlayer++;
+      this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+
       setTimeout(() => { //setzt nach timeout die Animation-Variable auf false
         this.game.playedCard.push(this.currentCard); //pusht nach Animation neue Karte in den playedCard stack zum Anzeigen
         this.pickCardAnimation = false;
@@ -43,8 +47,6 @@ export class GameComponent implements OnInit {
         this.game.players.push(name);
       }
     });
-    console.log(this.game.currentPlayer);
-    console.log(this.game.players);
   }
   
 
