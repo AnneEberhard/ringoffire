@@ -22,7 +22,7 @@
     align-items: center;
 
     img {
-        width: 30vw;
+        width: 25vw;
         height: auto;
 
         &:hover {
@@ -31,3 +31,11 @@
         }
     }
 }
+
+.imprint {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    color: white;
+    text-decoration: none;
+  }
