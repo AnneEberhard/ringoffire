@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Game } from 'src/models/game';
 import { DialogueAddPlayerComponent } from '../dialogue-add-player/dialogue-add-player.component';
+import { Firestore, collection, doc,  onSnapshot, query, limit, addDoc } from '@angular/fire/firestore';
+
 
 
 @Component({
@@ -14,15 +16,57 @@ export class GameComponent implements OnInit {
   currentCard: string = '';
   game: Game;
 
-  constructor(public dialog: MatDialog) { }
+  unsubGame;
+  firebaseGame: {} = {};
+  firestore: Firestore = inject(Firestore); //aus Kevins video
+  constructor(public dialog: MatDialog) { } 
 
   ngOnInit(): void {
-    this.newGame();  
+    this.newGame();
+    this.unsubGame = this.getGame();
   }
+
+  ngonDestroy() {
+    this.unsubGame;
+  }
+
+getGame() {
+  //const q = query(this.getCollectionRef('games/ENtm9u85RfSzMupHwyV0/games'));
+  const q = query(this.getCollectionRef('games'));
+  return onSnapshot(q, (list) => {
+    list.forEach(element => {
+      //console.log('element.id:', element.id);
+      //this.firebaseGame = element.data();
+      //console.log('element: ', this.firebaseGame);
+    }
+      )
+  })
+}
+  
+  getCollectionRef(collectionID: string) {
+    return collection(this.firestore, collectionID);
+  }
+
+  getSingleDocRef(collectionID: string, documentID: string) {
+    return doc(collection(this.firestore, collectionID), documentID)
+  }
+
 
   newGame() {
     this.game = new Game();
+    this.addGame(this.game.toJSON(), 'games');
   }
+
+  async addGame(item: {}, collectionID: string) {
+    await addDoc(this.getCollectionRef(collectionID), item).catch(
+      (err) => { console.error(err) }
+    ).then(
+      (docRef) => {
+      }
+    )
+  }
+
+
 
   pickCard() {
     if (!this.pickCardAnimation) { //wird nur durchgeführt, wenn animation false ist
@@ -48,6 +92,6 @@ export class GameComponent implements OnInit {
       }
     });
   }
-  
+
 
 }
