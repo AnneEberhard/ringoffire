@@ -47,7 +47,6 @@ export class GameComponent implements OnInit {
       this.game.stack = doc.data()['stack'];
       this.game.playedCard = doc.data()['playedCard'];
       this.game.currentPlayer = doc.data()['currentPlayer'];
-      console.log(this.game);
     });
   }
 
@@ -72,14 +71,13 @@ export class GameComponent implements OnInit {
 
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
-
+     
       setTimeout(() => { //setzt nach timeout die Animation-Variable auf false
         this.game.playedCard.push(this.currentCard); //pusht nach Animation neue Karte in den playedCard stack zum Anzeigen
         this.pickCardAnimation = false;
+        this.saveGame();
       }, 1000)
     }
-    console.log('payed Cards: ',this.game.playedCard)
-    this.saveGame();
   }
 
   openDialog(): void {
