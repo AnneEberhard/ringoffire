@@ -14,8 +14,7 @@ import { GameService } from '../game.service';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  pickCardAnimation = false;
-  currentCard: string = '';
+
   game: Game;
   gameId: string;
 
@@ -47,6 +46,8 @@ export class GameComponent implements OnInit {
       this.game.stack = doc.data()['stack'];
       this.game.playedCard = doc.data()['playedCard'];
       this.game.currentPlayer = doc.data()['currentPlayer'];
+      this.game.pickCardAnimation = doc.data()['pickCardAnimation'];
+      this.game.currentCard = doc.data()['currentCard'];
     });
   }
 
@@ -65,16 +66,16 @@ export class GameComponent implements OnInit {
 
 
   pickCard() {
-    if (!this.pickCardAnimation) { //wird nur durchgeführt, wenn animation false ist
-      this.currentCard = this.game.stack.pop();
-      this.pickCardAnimation = true;
+    if (!this.game.pickCardAnimation) { //wird nur durchgeführt, wenn animation false ist
+      this.game.currentCard = this.game.stack.pop();
+      this.game.pickCardAnimation = true;
 
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
      
       setTimeout(() => { //setzt nach timeout die Animation-Variable auf false
-        this.game.playedCard.push(this.currentCard); //pusht nach Animation neue Karte in den playedCard stack zum Anzeigen
-        this.pickCardAnimation = false;
+        this.game.playedCard.push(this.game.currentCard); //pusht nach Animation neue Karte in den playedCard stack zum Anzeigen
+        this.game.pickCardAnimation = false;
         this.saveGame();
       }, 1000)
     }
