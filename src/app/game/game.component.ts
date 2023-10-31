@@ -2,7 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Game } from 'src/models/game';
 import { DialogueAddPlayerComponent } from '../dialogue-add-player/dialogue-add-player.component';
-import { Firestore, collection, doc,  onSnapshot, query, limit, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, doc, onSnapshot, query, limit, addDoc, updateDoc } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
+import { GameService } from '../game.service';
 
 
 
@@ -15,34 +17,40 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard: string = '';
   game: Game;
+  gameId: string;
 
-  unsubGame;
-  firebaseGame: {} = {};
+  unsubGame; //subscription für onSnapshot
+
   firestore: Firestore = inject(Firestore); //aus Kevins video
-  constructor(public dialog: MatDialog) { } 
+  constructor(private route: ActivatedRoute, public dialog: MatDialog, private gameService: GameService) { }
 
   ngOnInit(): void {
     this.newGame();
-    this.unsubGame = this.getGame();
+    this.route.params.subscribe((gameId) => { //id kommt aus der url, um immer auf dasselbe Game zuzugreifen
+      if (gameId) {
+        this.unsubGame = this.getGame((gameId['id'])); //wichtig hier auf die id des Objectes zuzugreifen
+        this.gameId = gameId['id'];
+      }
+    });
   }
 
   ngonDestroy() {
     this.unsubGame;
   }
 
-getGame() {
-  //const q = query(this.getCollectionRef('games/ENtm9u85RfSzMupHwyV0/games'));
-  const q = query(this.getCollectionRef('games'));
-  return onSnapshot(q, (list) => {
-    list.forEach(element => {
-      //console.log('element.id:', element.id);
-      //this.firebaseGame = element.data();
-      //console.log('element: ', this.firebaseGame);
-    }
-      )
-  })
-}
-  
+  getGame(gameID) {
+    //console.log('getGame GamesID:', gameID);
+    let docRef = this.getSingleDocRef('games', gameID);
+    return onSnapshot(docRef, (doc) => {
+      //console.log("Current data: ", doc.data());
+      this.game.players = doc.data()['players'];
+      this.game.stack = doc.data()['stack'];
+      this.game.playedCard = doc.data()['playedCard'];
+      this.game.currentPlayer = doc.data()['currentPlayer'];
+      console.log(this.game);
+    });
+  }
+
   getCollectionRef(collectionID: string) {
     return collection(this.firestore, collectionID);
   }
@@ -54,18 +62,7 @@ getGame() {
 
   newGame() {
     this.game = new Game();
-    this.addGame(this.game.toJSON(), 'games');
   }
-
-  async addGame(item: {}, collectionID: string) {
-    await addDoc(this.getCollectionRef(collectionID), item).catch(
-      (err) => { console.error(err) }
-    ).then(
-      (docRef) => {
-      }
-    )
-  }
-
 
 
   pickCard() {
@@ -81,6 +78,8 @@ getGame() {
         this.pickCardAnimation = false;
       }, 1000)
     }
+    console.log('payed Cards: ',this.game.playedCard)
+    this.saveGame();
   }
 
   openDialog(): void {
@@ -91,7 +90,19 @@ getGame() {
         this.game.players.push(name);
       }
     });
+    this.saveGame();
+  }
+
+  async saveGame() {
+    let docRef = this.getSingleDocRef('games', this.gameId);
+    await updateDoc(docRef, this.game.toJSON()).catch(
+      (err) => { console.error(err); } //um Fehler abzufangen
+    );
+    console.log(this.game);
   }
 
 
+
 }
+
+
