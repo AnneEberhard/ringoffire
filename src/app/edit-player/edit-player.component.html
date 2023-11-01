@@ -1,3 +1,4 @@
+<h1 mat-dialog-title>Edit player</h1>
 <div class="pictureDialogue">
   <div>
     <img
@@ -8,4 +9,8 @@
     />
   </div>
   <span>Choose picture by clicking on it</span>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+    <button mat-button color="warn" [mat-dialog-close]="'DELETE'" cdkFocusInitial>Delete player</button>
+  </div>
 </div>
