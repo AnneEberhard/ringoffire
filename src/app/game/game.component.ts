@@ -78,6 +78,7 @@ export class GameComponent implements OnInit {
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
 
+      this.saveGame();
       setTimeout(() => { //setzt nach timeout die Animation-Variable auf false
         this.game.playedCard.push(this.game.currentCard); //pusht nach Animation neue Karte in den playedCard stack zum Anzeigen
         this.game.pickCardAnimation = false;
