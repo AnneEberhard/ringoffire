@@ -18,6 +18,7 @@ export class GameComponent implements OnInit {
 
   game: Game;
   gameId: string;
+  gameOver: boolean = false;
 
   unsubGame; //subscription für onSnapshot
 
@@ -68,13 +69,15 @@ export class GameComponent implements OnInit {
 
 
   pickCard() {
-    if (!this.game.pickCardAnimation) { //wird nur durchgeführt, wenn animation false ist
+    if (this.game.stack.length == 0) {
+      this.gameOver = true;
+    } else if (!this.game.pickCardAnimation) { //wird nur durchgeführt, wenn animation false ist
       this.game.currentCard = this.game.stack.pop();
       this.game.pickCardAnimation = true;
 
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
-     
+
       setTimeout(() => { //setzt nach timeout die Animation-Variable auf false
         this.game.playedCard.push(this.game.currentCard); //pusht nach Animation neue Karte in den playedCard stack zum Anzeigen
         this.game.pickCardAnimation = false;
@@ -90,9 +93,9 @@ export class GameComponent implements OnInit {
       if (name && name.length > 0) {
         this.game.players.push(name);
         this.game.playerImages.push('player0.png');
+        this.saveGame();
       }
     });
-    this.saveGame();
   }
 
   async saveGame() {
@@ -100,24 +103,35 @@ export class GameComponent implements OnInit {
     await updateDoc(docRef, this.game.toJSON()).catch(
       (err) => { console.error(err); } //um Fehler abzufangen
     );
-    console.log(this.game);
   }
 
-editPlayer(playerId:number) {
-  const dialogRef = this.dialog.open(EditPlayerComponent);
-  dialogRef.afterClosed().subscribe((change: string) => {
-    if(change) {
-      if(change=='DELETE') {
-      this.game.playerImages.splice(playerId,1);
-      this.game.players.splice(playerId,1);
-      } else {
-        this.game.playerImages[playerId] = change;
+  editPlayer(playerId: number) {
+    const dialogRef = this.dialog.open(EditPlayerComponent);
+    dialogRef.afterClosed().subscribe((change: string) => {
+      if (change) {
+        if (change == 'DELETE') {
+          this.game.playerImages.splice(playerId, 1);
+          this.game.players.splice(playerId, 1);
+        } else {
+          this.game.playerImages[playerId] = change;
+        }
       }
-    }
-  });
-  this.saveGame();
-}
+    });
+    this.saveGame();
+  }
 
+  restart() {
+    let docRef = this.getSingleDocRef('games', this.gameId);
+   onSnapshot(docRef, (doc) => {
+      this.game.stack = doc.data()['playedCard'];
+      this.game.playedCard = doc.data()['stack'];
+      this.game.currentCard = doc.data()['currentCard'];
+    });
+    this. gameOver = false;
+    this.saveGame();
+    this.getGame(this.gameId);
+    console.log(this.game)
+  }
 }
 
 

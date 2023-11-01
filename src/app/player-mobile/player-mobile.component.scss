@@ -6,6 +6,9 @@
     background-color: rgb(230, 213, 200);
     width: 60px;
     border-radius: 0px 0px 50px 50px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 
     img {
         width: 30px;

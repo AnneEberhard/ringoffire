@@ -1,9 +1,9 @@
 <a class="imprint" [routerLink]="['/imprint']">Imprint</a>
-
+<div >
 <app-player
   (click)="editPlayer(i)"
   *ngFor="let player of game.players; let i = index"
-  [ngStyle]="{ 'top.px': 40 + i * 100 }"
+  [ngStyle]="{ 'top.px': 40 + i * 80 }"
   [playerActive]="i == game.currentPlayer"
   [name]="player"
   [index]="i"
@@ -22,7 +22,12 @@
   </app-player-mobile>
 </div>
 
-<div class="field">
+<div class="gameOver" *ngIf="gameOver"> 
+ <img src="assets/img/gameOver.jpg">
+ <button (click) ="restart()">Restart Game</button>
+</div>
+
+<div *ngIf="!gameOver" class="field">
   <div class="cardStack">
     <img
       [ngStyle]="{ 'right.px': i * 5 }"
@@ -50,8 +55,9 @@
     />
   </div>
 </div>
-<app-game-info class="gameInfo" [card]="game.currentCard"></app-game-info>
+<app-game-info *ngIf="!gameOver" class="gameInfo" [card]="game.currentCard"></app-game-info>
 
-<button mat-fab color="primary" (click)="openDialog()" class="buttonAdd">
+<button *ngIf="!gameOver" mat-fab color="primary" (click)="openDialog()" class="buttonAdd">
   <mat-icon>add</mat-icon>
 </button>
+</div>
