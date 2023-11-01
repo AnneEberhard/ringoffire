@@ -7,6 +7,11 @@
     justify-content: center;
     align-items: center;
 
+    @media (max-width: 960px) {
+
+        overflow: hidden;
+      }
+
     img {
         height: 90vh;
     }
@@ -21,14 +26,22 @@
     justify-content: center;
     align-items: center;
 
+   
+
     img {
-        width: 25vw;
+        width: 400px;
         height: auto;
 
         &:hover {
             cursor: pointer;
             filter: brightness(1.5);
         }
+        @media (max-width: 960px) {
+            width: 300px;
+          }
+          @media (max-width: 320px) {
+            width: 250px;
+          }
     }
 }
 
@@ -39,3 +52,4 @@
     color: white;
     text-decoration: none;
   }
+

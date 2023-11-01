@@ -1,0 +1,8 @@
+mat-card {
+
+    padding-left: 8px;
+
+    @media (max-width: 720px) {
+      min-height: 120px;
+      }
+}

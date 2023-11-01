@@ -1,12 +1,21 @@
 <a class="imprint" routerLink="imprint">Imprint</a> 
-<app-player
+
+<app-player 
   *ngFor="let player of game.players; let i = index"
   [ngStyle]="{ 'top.px': 40 + i * 100 }"
   [playerActive]="i == game.currentPlayer"
   [name]= "player"
   [index]= "i"
-  class="playerPosition"
+  class="playerPosition hide-mobile"
 ></app-player>
+<div class="scrollContainer hide-desktop">
+<app-player-mobile   
+*ngFor="let player of game.players; let i = index"
+[playerActive]="i == game.currentPlayer"
+[name]= "player"
+[index]= "i">
+</app-player-mobile>
+</div>
  
 <div class="field">
   <div class="cardStack">

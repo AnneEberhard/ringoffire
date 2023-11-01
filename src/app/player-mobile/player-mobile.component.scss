@@ -1,32 +1,27 @@
 .player {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     background-color: rgb(230, 213, 200);
-    width: 300px;
-    border-radius: 50px 0 0 50px;
-
-    @media (max-width: 850px) {
-        width: 220px;
-    }
+    width: 60px;
+    border-radius: 0px 0px 50px 50px;
 
     img {
-        width: 70px;
-        height:70px;
+        width: 30px;
+        height: 30px;
         object-fit: cover;
         border-radius: 100%;
     }
 
     span {
-        font-size: 24px;
-        margin-left: 16px;
+        font-size: 12px;
+        text-align: center;
         color: rgb(92,0,0);
     }
 }
 
 .playerActive {
     background-color: white !important;
-    span {
-        font-size: 32px !important;
-    }
     }
     
