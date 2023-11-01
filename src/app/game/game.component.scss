@@ -96,6 +96,7 @@
   gap: 8px;
 }
 
+
 .imprint {
   position: absolute;
   top: 16px;
@@ -106,5 +107,13 @@
 
   @media (max-width: 720px) {
     top: 75vh;
+  }
+}
+
+app-player, app-player-mobile {
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(1.15);
   }
 }

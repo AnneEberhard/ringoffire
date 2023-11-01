@@ -5,6 +5,7 @@ import { DialogueAddPlayerComponent } from '../dialogue-add-player/dialogue-add-
 import { Firestore, collection, doc, onSnapshot, query, limit, addDoc, updateDoc } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../game.service';
+import { EditPlayerComponent } from '../edit-player/edit-player.component';
 
 
 
@@ -43,6 +44,7 @@ export class GameComponent implements OnInit {
     return onSnapshot(docRef, (doc) => {
       //console.log("Current data: ", doc.data());
       this.game.players = doc.data()['players'];
+      this.game.playerImages = doc.data()['playerImages'];
       this.game.stack = doc.data()['stack'];
       this.game.playedCard = doc.data()['playedCard'];
       this.game.currentPlayer = doc.data()['currentPlayer'];
@@ -87,6 +89,7 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.game.playerImages.push('player0.png');
       }
     });
     this.saveGame();
@@ -100,7 +103,13 @@ export class GameComponent implements OnInit {
     console.log(this.game);
   }
 
-
+editPlayer(playerId:number) {
+  const dialogRef = this.dialog.open(EditPlayerComponent);
+  dialogRef.afterClosed().subscribe((change: string) => {
+   this.game.playerImages[playerId] = change;
+  });
+  this.saveGame();
+}
 
 }
 

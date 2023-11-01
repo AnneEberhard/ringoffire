@@ -1,0 +1,11 @@
+<div class="pictureDialogue">
+  <div>
+    <img
+      [mat-dialog-close]="picture"
+      class="chooseProfilePicture"
+      *ngFor="let picture of allProfilePictures"
+      src="assets/img/player/{{ picture }}"
+    />
+  </div>
+  <span>Choose picture by clicking on it</span>
+</div>

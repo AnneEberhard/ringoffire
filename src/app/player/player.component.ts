@@ -10,5 +10,5 @@ export class PlayerComponent {
 @Input() name;
 @Input() index;
 @Input() playerActive: boolean = false;
-
+@Input() profilePic;
 }

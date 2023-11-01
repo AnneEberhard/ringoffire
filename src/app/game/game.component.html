@@ -1,22 +1,27 @@
-<a class="imprint" routerLink="imprint">Imprint</a> 
+<a class="imprint" routerLink="imprint">Imprint</a>
 
-<app-player 
+<app-player
+  (click)="editPlayer(i)"
   *ngFor="let player of game.players; let i = index"
   [ngStyle]="{ 'top.px': 40 + i * 100 }"
   [playerActive]="i == game.currentPlayer"
-  [name]= "player"
-  [index]= "i"
+  [name]="player"
+  [index]="i"
+  [profilePic]="game.playerImages[i]"
   class="playerPosition hide-mobile"
 ></app-player>
 <div class="scrollContainer hide-desktop">
-<app-player-mobile   
-*ngFor="let player of game.players; let i = index"
-[playerActive]="i == game.currentPlayer"
-[name]= "player"
-[index]= "i">
-</app-player-mobile>
+  <app-player-mobile
+    (click)="editPlayer(i)"
+    *ngFor="let player of game.players; let i = index"
+    [playerActive]="i == game.currentPlayer"
+    [name]="player"
+    [index]="i"
+    [profilePic]="game.playerImages[i]"
+  >
+  </app-player-mobile>
 </div>
- 
+
 <div class="field">
   <div class="cardStack">
     <img
@@ -50,4 +55,3 @@
 <button mat-fab color="primary" (click)="openDialog()" class="buttonAdd">
   <mat-icon>add</mat-icon>
 </button>
-
